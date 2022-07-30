@@ -8,7 +8,7 @@ class VideoGame
     std::string title;
     std::string genres;
     int max_players;
-    bool online;
+    std::string online;
     int review_score;
     float price;
     std::string console;
@@ -22,7 +22,7 @@ public:
     std::string getTitle();
     std::string getGenres();
     int getPlayers() const;
-    bool getOnline() const;
+    std::string getOnline() const;
     int getReview() const;
     float getPrice() const;
     std::string getConsole();
