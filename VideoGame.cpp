@@ -5,7 +5,7 @@ VideoGame::VideoGame()
     this->title = "";
     this->genres = "";
     this->max_players = 0;
-    this->online = false;
+    this->online = "";
     this->review_score = 0;
     this->price = 0;
     this->console = "";
@@ -14,7 +14,7 @@ VideoGame::VideoGame()
     this->completion = 0;
 }
 
-VideoGame::VideoGame(std::string title, std::string genres, int max_players, bool online, int review_score, float price,
+VideoGame::VideoGame(std::string title, std::string genres, int max_players, std::string online, int review_score, float price,
                      std::string console, std::string rating, int year, float completion)
 {
     this->title = title;
@@ -44,7 +44,7 @@ int VideoGame::getPlayers() const
     return max_players;
 }
 
-bool VideoGame::getOnline() const
+std::string VideoGame::getOnline() const
 {
     return online;
 }
@@ -78,4 +78,3 @@ float VideoGame::getCompletion() const
 {
     return completion;
 }
-
