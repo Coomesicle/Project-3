@@ -17,7 +17,7 @@ class VideoGame
     float completion;
 public:
     VideoGame();
-    VideoGame(std::string title, std::string genres, int max_players, bool online, int review_score, float price,
+    VideoGame(std::string title, std::string genres, int max_players, std::string online, int review_score, float price,
               std::string console, std::string rating, int year, float completion);
     std::string getTitle();
     std::string getGenres();
