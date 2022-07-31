@@ -19,6 +19,24 @@ void mergeTitle(std::vector<VideoGame>& v, int left, int mid, int right);
 void mergeSortTitle(std::vector<VideoGame>& v, int first, int end);
 void mergePrice(std::vector<VideoGame>& v, int left, int mid, int right);
 void mergeSortPrice(std::vector<VideoGame>& v, int first, int end);
+void mergeReview(std::vector<VideoGame>& v, int left, int mid, int right);
+void mergeSortReview(std::vector<VideoGame>& v, int first, int end);
+void mergeRating(std::vector<VideoGame>& v, int left, int mid, int right);
+void mergeSortRating(std::vector<VideoGame>& v, int first, int end);
+void mergeCompletion(std::vector<VideoGame>& v, int left, int mid, int right);
+void mergeSortCompletion(std::vector<VideoGame>& v, int first, int end);
+void swap(std::vector<VideoGame>& v,int a,int b);
+int PriceSort(std::vector<VideoGame>& v, int low, int high);
+int TitleSort(std::vector<VideoGame>& v, int low, int high);
+int ReviewSort(std::vector<VideoGame>& v, int low, int high);
+int RatingSort(std::vector<VideoGame>& v, int low, int high);
+int CompletionSort(std::vector<VideoGame>& v, int low, int high);
+void QuickSortPrice(std::vector<VideoGame>& v, int low, int high);
+void QuickSortTitle(std::vector<VideoGame>& v, int low, int high);
+void QuickSortReview(std::vector<VideoGame>& v, int low, int high);
+void QuickSortRating(std::vector<VideoGame>& v, int low, int high);
+void QuickSortCompletion(std::vector<VideoGame>& v, int low, int high);
+
 
 int main()
 {
@@ -39,8 +57,11 @@ int main()
                 std::cin >> sort_choice;
 
                 std::vector<VideoGame> tempVect;
-                for (int i=0; i<games.size(); i++) 
-                    tempVect.push_back(games[i]); 
+                std::vector<VideoGame> tempVect2;
+                for (int i=0; i<games.size(); i++){
+                    tempVect.push_back(games[i]);
+                    tempVect2.push_back(games[i]); 
+                }
 
                 if(sort_choice == 1)
                 {
@@ -51,7 +72,9 @@ int main()
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
-                    // Call quick sort function for price
+
+                    QuickSortPrice(tempVect2,0,tempVect2.size()-1);
+
                     stop = high_resolution_clock::now();
                     auto q_duration = duration_cast<microseconds>(stop - start);
                     // Print games
@@ -67,7 +90,9 @@ int main()
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
-                    // Call quick sort function for review
+
+                    QuickSortReview(tempVect2, 0, tempVect2.size()-1);
+
                     stop = high_resolution_clock::now();
                     auto q_duration = duration_cast<microseconds>(stop - start);
                     // Print games
@@ -83,7 +108,9 @@ int main()
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
-                    // Call quick sort function for rating
+                    
+                    QuickSortRating(tempVect2, 0, tempVect2.size()-1);
+
                     stop = high_resolution_clock::now();
                     auto q_duration = duration_cast<microseconds>(stop - start);
                     // Print games
@@ -99,7 +126,9 @@ int main()
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
-                    // Call quick sort function for completion
+                    
+                    QuickSortCompletion(tempVect2, 0, tempVect2.size()-1);
+
                     stop = high_resolution_clock::now();
                     auto q_duration = duration_cast<microseconds>(stop - start);
                     // Print games
@@ -553,8 +582,56 @@ void swap(std::vector<VideoGame>& v,int a,int b){
 	v.at(b)=temp;
 }
 
-
-
+int RatingSort(std::vector<VideoGame>& v, int low, int high){
+	std::string pivot = v.at(low).getRating();
+	int up = low;
+	int down = high;
+	
+	while(up < down){
+		for(int j = up; j < high; j++){
+			if(v.at(up).getRating() > pivot){
+				break;
+			}
+			up++;
+		}
+		for(int j = high; j > low; j--){
+			if(v.at(down).getRating() < pivot){
+				break;
+			}
+			down--;
+		}
+		if(up<down){
+			swap(v,up,down);
+		}
+	}
+    swap(v,low,down);
+    return down;
+}
+int ReviewSort(std::vector<VideoGame>& v, int low, int high){
+	int pivot = v.at(low).getReview();
+	int up = low;
+	int down = high;
+	
+	while(up < down){
+		for(int j = up; j < high; j++){
+			if(v.at(up).getReview() > pivot){
+				break;
+			}
+			up++;
+		}
+		for(int j = high; j > low; j--){
+			if(v.at(down).getReview() < pivot){
+				break;
+			}
+			down--;
+		}
+		if(up<down){
+			swap(v,up,down);
+        }
+	}
+    swap(v,low,down);
+    return down;
+}
 int PriceSort(std::vector<VideoGame>& v, int low, int high){
 	int pivot = v.at(low).getPrice();
 	int up = low;
@@ -576,8 +653,9 @@ int PriceSort(std::vector<VideoGame>& v, int low, int high){
 		if(up<down){
 			swap(v,up,down);
 		}
-		swap(v,low,down);
 	}
+    swap(v,low,down);
+    return down;
 }
 int TitleSort(std::vector<VideoGame>& v, int low, int high){
 	std::string pivot = v.at(low).getTitle();
@@ -600,9 +678,37 @@ int TitleSort(std::vector<VideoGame>& v, int low, int high){
 		if(up<down){
 			swap(v,up,down);
 		}
-		swap(v,low,down);
 	}
+    swap(v,low,down);
+    return down;
 }
+
+int CompletionSort(std::vector<VideoGame>& v, int low, int high){
+	int pivot = v.at(low).getCompletion();
+	int up = low;
+	int down = high;
+	
+	while(up < down){
+		for(int j = up; j < high; j++){
+			if(v.at(up).getCompletion() > pivot){
+				break;
+			}
+			up++;
+		}
+		for(int j = high; j > low; j--){
+			if(v.at(down).getCompletion() < pivot){
+				break;
+			}
+			down--;
+		}
+		if(up<down){
+			swap(v,up,down);
+		}
+	}
+    swap(v,low,down);
+    return down;
+}
+
 void QuickSortPrice(std::vector<VideoGame>& v, int low, int high){
 	if(low < high){
 		int pivot = PriceSort(v,low,high);
@@ -617,4 +723,24 @@ void QuickSortTitle(std::vector<VideoGame>& v, int low, int high){
 		QuickSortTitle(v,pivot+1,high);
 	}
 }
-
+void QuickSortReview(std::vector<VideoGame>& v, int low, int high){
+	if(low < high){
+		int pivot = ReviewSort(v,low,high);
+		QuickSortReview(v,low,pivot-1);
+		QuickSortReview(v,pivot+1,high);
+	}
+}
+void QuickSortRating(std::vector<VideoGame>& v, int low, int high){
+	if(low < high){
+		int pivot = RatingSort(v,low,high);
+		QuickSortRating(v,low,pivot-1);
+		QuickSortRating(v,pivot+1,high);
+	}
+}
+void QuickSortCompletion(std::vector<VideoGame>& v, int low, int high){
+	if(low < high){
+		int pivot = CompletionSort(v,low,high);
+		QuickSortCompletion(v,low,pivot-1);
+		QuickSortCompletion(v,pivot+1,high);
+	}
+}
