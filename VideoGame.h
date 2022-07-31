@@ -1,14 +1,11 @@
 #include <iostream>
 #include <string>
-#include <vector>
-
 
 class VideoGame
 {
     std::string title;
-    std::string genres;
     int max_players;
-    std::string online;
+    std::string genres;
     int review_score;
     float price;
     std::string console;
@@ -17,12 +14,11 @@ class VideoGame
     float completion;
 public:
     VideoGame();
-    VideoGame(std::string title, std::string genres, int max_players, std::string online, int review_score, float price,
+    VideoGame(std::string title, std::string genres, int max_players, int review_score, float price,
               std::string console, std::string rating, int year, float completion);
     std::string getTitle();
     std::string getGenres();
     int getPlayers() const;
-    std::string getOnline() const;
     int getReview() const;
     float getPrice() const;
     std::string getConsole();
