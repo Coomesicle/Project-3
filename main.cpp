@@ -35,10 +35,17 @@ int main()
                 std::cout << "Please choose an option to sort the games: " << std::endl;
                 std::cout << "1. Used Price\n2. Review\n3. Rating\n4. Average Completion Time\n5. Back" << std::endl;
                 std::cin >> sort_choice;
+
+                std::vector<VideoGame> tempVect;
+                for (int i=0; i<games.size(); i++) 
+                    tempVect.push_back(games[i]); 
+
                 if(sort_choice == 1)
                 {
                     auto start = high_resolution_clock::now();
-                    // Call merge sort function for price
+
+                    mergeSortPrice(tempVect, 0, tempVect.size()-1);
+
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
@@ -52,7 +59,9 @@ int main()
                 else if(sort_choice == 2)
                 {
                     auto start = high_resolution_clock::now();
-                    // Call merge sort function for review
+                    
+                    mergeSortReview(tempVect, 0, tempVect.size()-1);
+
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
@@ -66,7 +75,9 @@ int main()
                 else if(sort_choice == 3)
                 {
                     auto start = high_resolution_clock::now();
-                    // Call merge sort function for rating
+                    
+                    mergeSortRating(tempVect, 0, tempVect.size()-1);
+
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
@@ -80,7 +91,9 @@ int main()
                 else if(sort_choice == 4)
                 {
                     auto start = high_resolution_clock::now();
-                    // Call merge sort function for completion
+                    
+                    mergeSortCompletion(tempVect, 0, tempVect.size()-1);
+
                     auto stop = high_resolution_clock::now();
                     auto m_duration = duration_cast<microseconds>(stop - start);
                     start = high_resolution_clock::now();
@@ -488,3 +501,46 @@ void mergeSortRating(std::vector<VideoGame>& v, int first, int end){
     mergeRating(v, first, mid, end);
   }
 }
+
+void mergeCompletion(std::vector<VideoGame>& v, int left, int mid, int right){
+  int v1 = left;
+  int v2 = mid + 1;
+
+  std::vector<VideoGame> tempV;
+
+	while (v1 <= mid && v2 <= right) {
+		if (v[v1].getCompletion() <= v[v2].getCompletion()) {
+			tempV.push_back(v[v1]);
+			v1++;
+		}
+		else {
+			tempV.push_back(v[v2]);
+			v2++;
+		}
+  }
+
+  while (v1 <= mid) {
+		tempV.push_back(v[v1]);
+		v1++;
+	}
+
+	while (v2 <= right) {
+		tempV.push_back(v[v2]);
+		v2++;
+	}
+
+	for (int i = left; i <= right; i++)
+  {
+    v[i] = tempV[i - left];
+  }
+}
+
+void mergeSortCompletion(std::vector<VideoGame>& v, int first, int end){
+  if(first < end){
+    int mid = (first + end) / 2;
+    mergeSortCompletion(v, first, mid);
+    mergeSortCompletion(v, mid + 1, end);
+    mergeCompletion(v, first, mid, end);
+  }
+}
+
