@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <sstream>
 #include "VideoGame.h"
 using namespace std::chrono;
 
