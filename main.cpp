@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <chrono>
 #include "VideoGame.h"
@@ -364,6 +365,9 @@ void consoleGames(std::vector<VideoGame>& games, int console_choice)
         }
     }
 }
+
+//NOTE::The Merge Sort and Quick sort algorithms were both based on Aman's psuedocode within his sorting presentation
+//He cites the code from here: https://www.onlinegdb.com/ryRlgsGgD & https://www.onlinegdb.com/HJT6FfMlv
 
 void mergeTitle(std::vector<VideoGame>& v, int left, int mid, int right){
     int v1 = left;
