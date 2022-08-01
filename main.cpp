@@ -69,18 +69,20 @@ int main()
                 // If user decides to sort the games by price
                 if(sort_choice == 1)
                 {
-                    // This starts a timer to keep time of the merge sort algorithm
+                    // The timer algorithm was obtained from: https://www.geeksforgeeks.org/measure-execution-time-function-cpp/ 
+                    // This checks the time when the merge sort starts
                     auto start = high_resolution_clock::now();
 
                     mergeSortPrice(tempVect, 0, (int)tempVect.size()-1);
-
+                    
+                    // This checks the time when the merge sort stops
                     auto stop = high_resolution_clock::now();
-                    auto m_duration = duration_cast<microseconds>(stop - start);
-                    start = high_resolution_clock::now(); // Timer for quick sort
+                    auto m_duration = duration_cast<microseconds>(stop - start); // This calculates the difference between the stop and start time
+                    start = high_resolution_clock::now(); // Start time for quick sort
 
                     QuickSortPrice(tempVect2,0,(int) tempVect2.size()-1);
 
-                    stop = high_resolution_clock::now();
+                    stop = high_resolution_clock::now(); // Stop time for quick sort
                     auto q_duration = duration_cast<microseconds>(stop - start);
                     printGames(tempVect); // Prints the games
                     // Prints the times taken for the two sorting algorithms
